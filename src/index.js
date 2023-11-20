@@ -41,10 +41,30 @@ newFoodForm.addEventListener('submit', (event) => {
         image: newImageInputElement.value,
         description: newDescriptionInputElement.value
     }
+    // Optimistic rendering
+    // addFoodImageToRestaurantMenu(newFood)
 
+    // write your code here => POST request
+    fetch('http://localhost:3000/foods', {
+    method: "POST", 
+    headers: {
+        "Content-type": "application/json"
+    },
+    body: JSON.stringify(newFood)
+}) 
+.then(response => {
+if (response.ok === true){
+   response.json().then(newFood => {
     addFoodImageToRestaurantMenu(newFood)
-
-    // write your code here
-
-    newFoodForm.reset()
+   })
+}
+    else {
+        alert("Error: Unable to add new food")
+    }
 })
+
+    
+newFoodForm.reset()
+})
+
+
